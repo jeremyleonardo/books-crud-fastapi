@@ -11,6 +11,7 @@ typing = "*"
 fastapi = "*"
 uvicorn = "*"
 psycopg2 = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

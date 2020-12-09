@@ -1,12 +1,12 @@
 from sqlalchemy import create_engine
-from config import DATABASE_URI
+from settings import DATABASE_URL
 from models import Base, Book
 from fastapi import FastAPI
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime, date
 from typing import Optional
 
-engine = create_engine(DATABASE_URI)
+engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
 
 def recreate_database():
