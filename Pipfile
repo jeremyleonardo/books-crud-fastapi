@@ -4,16 +4,16 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-sqlalchemy = "*"
-pylint = "*"
-datetime = "*"
-typing = "*"
-fastapi = "*"
-uvicorn = "*"
+sqlalchemy = "==1.3.20"
+datetime = "==4.3"
+typing = "==3.7.4.3"
+fastapi = "==0.62.0"
+uvicorn = "==0.13.1"
+python-dotenv = "==0.15.0"
 psycopg2 = "*"
-python-dotenv = "*"
 
 [dev-packages]
+pylint = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.8"
