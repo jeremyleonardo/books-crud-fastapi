@@ -1,18 +1,11 @@
 # Books API
 
-A simple CRUD API created with FastAPI and SQLAlchemy for PostgreSQL<br><br>
+A simple CRUD API created with FastAPI and SQLAlchemy for PostgreSQL
 
 ## Usage
 
+using pipenv:
 ```
-uvicorn main:app
-```
-or
-```
+pipenv install
 pipenv run uvicorn main:app
 ```
-<br><br>
-
-## Author
-
-Jeremy Leonardo
