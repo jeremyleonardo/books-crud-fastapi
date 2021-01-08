@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 from datetime import datetime, date
 from typing import Optional
 from app.settings import DATABASE_URL
@@ -37,10 +38,14 @@ async def find_book(id: int):
        Book.id == id
     ).first()
     session.close()
+
+    result = jsonable_encoder({
+        "book": book
+        })
     
     return JSONResponse(status_code=200, content={
         "status_code": 200,
-        "book": book
+        "result": result
         })
 
 
@@ -54,9 +59,13 @@ async def get_books(page_size: int = 10, page: int = 1):
     books = session.query(Book).limit(page_size).offset(page*page_size).all()
     session.close()
 
+    result = jsonable_encoder({
+        "books": books
+        })
+
     return JSONResponse(status_code=200, content={
         "status_code": 200,
-        "books": books
+        "result": result
         })
 
 
