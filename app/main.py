@@ -23,33 +23,56 @@ def root():
 
 @app.get("/books/{id}")
 async def find_book(id: int):
-    s = Session()
-    book = s.query(Book).filter(
+    session = Session()
+    book = session.query(Book).filter(
        Book.id == id
     ).first()
-    s.close()
+    session.close()
     return {"book": book}
 
 @app.get("/books")
 async def get_books(limit: int = 10):
     if(limit > 100 | limit < 0):
         limit = 100
-    s = Session()
-    books = s.query(Book).limit(limit).all()
-    s.close()
+    session = Session()
+    books = session.query(Book).limit(limit).all()
+    session.close()
     return {"books": books}
 
 @app.post("/books")
 async def create_book(title: str, pages: int):
-    s = Session()
+    session = Session()
     book = Book(
         title=title,
         pages=pages,
         created_at = date.today()
     )
-    s.add(book)
-    s.commit()
-    s.close()
+    session.add(book)
+    session.commit()
+    session.close()
+    return {
+        "message": "success"
+    }
+
+@app.put("/books")
+async def update_book(id: int, title: str, pages: int):
+    session = Session()
+    book = session.query(Book).get(id)
+    book.title = title
+    book.pages = pages
+    session.commit()
+    session.close()
+    return {
+        "message": "success"
+    }
+
+@app.delete("/books")
+async def delete_book(id: int):
+    session = Session()
+    book = session.query(Book).get(id)
+    session.delete(book)
+    session.commit()
+    session.close()
     return {
         "message": "success"
     }
