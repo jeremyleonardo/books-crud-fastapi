@@ -31,6 +31,24 @@ def root():
     return {"message": "Sample books API is online"}
 
 
+@app.post("/books")
+async def create_book(title: str, pages: int):
+    session = Session()
+    book = Book(
+        title=title,
+        pages=pages,
+        created_at = date.today()
+    )
+    session.add(book)
+    session.commit()
+    session.close()
+    
+    return JSONResponse(status_code=200, content={
+        "status_code": 200,
+        "message": "success"
+        })
+
+
 @app.get("/books/{id}")
 async def find_book(id: int):
     session = Session()
@@ -66,24 +84,6 @@ async def get_books(page_size: int = 10, page: int = 1):
     return JSONResponse(status_code=200, content={
         "status_code": 200,
         "result": result
-        })
-
-
-@app.post("/books")
-async def create_book(title: str, pages: int):
-    session = Session()
-    book = Book(
-        title=title,
-        pages=pages,
-        created_at = date.today()
-    )
-    session.add(book)
-    session.commit()
-    session.close()
-    
-    return JSONResponse(status_code=200, content={
-        "status_code": 200,
-        "message": "success"
         })
 
 
