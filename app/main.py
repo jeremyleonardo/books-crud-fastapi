@@ -1,10 +1,11 @@
 from sqlalchemy import create_engine
-from app.settings import DATABASE_URL
-from app.models import Base, Book
-from fastapi import FastAPI
 from sqlalchemy.orm import sessionmaker
+from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 from datetime import datetime, date
 from typing import Optional
+from app.settings import DATABASE_URL
+from app.models import Base, Book
 
 
 # DISCLAIMER:
@@ -36,7 +37,11 @@ async def find_book(id: int):
        Book.id == id
     ).first()
     session.close()
-    return {"book": book}
+    
+    return JSONResponse(status_code=200, content={
+        "status_code": 200,
+        "book": book
+        })
 
 
 @app.get("/books")
@@ -48,7 +53,11 @@ async def get_books(page_size: int = 10, page: int = 1):
     session = Session()
     books = session.query(Book).limit(page_size).offset(page*page_size).all()
     session.close()
-    return {"books": books}
+
+    return JSONResponse(status_code=200, content={
+        "status_code": 200,
+        "books": books
+        })
 
 
 @app.post("/books")
@@ -62,9 +71,11 @@ async def create_book(title: str, pages: int):
     session.add(book)
     session.commit()
     session.close()
-    return {
+    
+    return JSONResponse(status_code=200, content={
+        "status_code": 200,
         "message": "success"
-    }
+        })
 
 
 @app.put("/books")
@@ -75,9 +86,11 @@ async def update_book(id: int, title: str, pages: int):
     book.pages = pages
     session.commit()
     session.close()
-    return {
+    
+    return JSONResponse(status_code=200, content={
+        "status_code": 200,
         "message": "success"
-    }
+        })
 
 
 @app.delete("/books")
@@ -87,6 +100,21 @@ async def delete_book(id: int):
     session.delete(book)
     session.commit()
     session.close()
-    return {
+
+    return JSONResponse(status_code=200, content={
+        "status_code": 200,
         "message": "success"
-    }
+        })
+
+
+@app.exception_handler(Exception)
+async def exception_handler(request, exc):
+    json_resp = get_default_error_response()
+    return json_resp
+
+
+def get_default_error_response(status_code=500, message="Internal Server Error"):
+    return JSONResponse(status_code=status_code, content={
+        "status_code": status_code,
+        "message": message
+        })
