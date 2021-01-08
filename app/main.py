@@ -88,11 +88,13 @@ async def create_book(title: str, pages: int):
 
 
 @app.put("/books")
-async def update_book(id: int, title: str, pages: int):
+async def update_book(id: int, title: str = None, pages: int = None):
     session = Session()
     book = session.query(Book).get(id)
-    book.title = title
-    book.pages = pages
+    if(title is not None):
+        book.title = title
+    if(pages is not None):
+        book.pages = pages
     session.commit()
     session.close()
     
