@@ -10,10 +10,10 @@ typing = "==3.7.4.3"
 fastapi = "==0.62.0"
 uvicorn = "==0.13.1"
 python-dotenv = "==0.15.0"
-psycopg2 = "*"
+psycopg2 = "==2.8.6"
 
 [dev-packages]
-pylint = "*"
+pylint = "==2.6.0"
 
 [requires]
 python_version = "3.8"
