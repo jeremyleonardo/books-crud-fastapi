@@ -15,8 +15,8 @@ It is recommended to test the available APIs from ``[GET] /docs``
 
 ## Usage
 
-using pipenv:
+using [poetry](https://python-poetry.org/):
 ```
-pipenv install
-pipenv run uvicorn main:app
+poetry install
+poetry run uvicorn app.main:app
 ```
