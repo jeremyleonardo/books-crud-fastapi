@@ -15,8 +15,9 @@ It is recommended to test the available APIs from ``[GET] /docs``
 
 ## Usage
 
-using [poetry](https://python-poetry.org/):
-```
-poetry install
-poetry run uvicorn app.main:app
-```
+1. Install [poetry](https://python-poetry.org/)
+2. Copy `.env.sample` to create `.env` and fill the environment variables accordingly
+3. Run `poetry install` to install dependencies
+4. Run `poetry run uvicorn app.main:app` to serve the app
+
+(note: you'll need to have python installed)
