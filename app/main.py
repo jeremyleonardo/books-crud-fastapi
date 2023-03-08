@@ -63,9 +63,8 @@ def get_books(page_size: int = 10, page: int = 1):
     if page_size > 100 or page_size < 0:
         page_size = 100
 
-    page -= 1
     session = Session()
-    books = session.query(Book).limit(page_size).offset(page * page_size).all()
+    books = session.query(Book).limit(page_size).offset((page - 1) * page_size).all()
     session.close()
 
     result = jsonable_encoder({"books": books})
